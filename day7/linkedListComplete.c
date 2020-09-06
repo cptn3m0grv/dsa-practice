@@ -72,6 +72,22 @@ struct Node * deleteEnd(struct Node * head){
 
 }
 
+struct Node * deleteAtIndex(struct Node * head, int index){
+    if(index==0){
+        head = deleteHead(head);
+    }else{
+        struct Node * p = head;
+        struct Node * q = head->next;
+        for(int i = 0; i<index-1; i++){
+            p = p->next;
+            q = q->next;
+        }
+        p->next = q->next;
+        free(q);
+    }
+    return head;
+}
+
 void traverseList(struct Node * head){
     printf("Address of node\t\t");
     printf("Data at node\t");
@@ -95,6 +111,7 @@ int main(){
     printf("5. Delete Head\n");
     printf("6. Delete the end\n");
     printf("7. Insert At Index\n");
+    printf("8. Delete at index\n");
 
     while(1){
         printf("Enter your choice: ");
@@ -137,6 +154,12 @@ int main(){
             printf("\n\tEnter the index to append at: ");
             scanf("%d", &index);
             head = insertAtIndex(head, data, index);
+            break;
+        
+        case 8:
+            printf("\tEnter the index: ");
+            scanf("%d", &index);
+            head = deleteAtIndex(head, index);
             break;
 
         default:
