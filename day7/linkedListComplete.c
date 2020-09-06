@@ -35,6 +35,23 @@ struct Node * insertAtEnd(struct Node * head, int data){
     return head;
 }
 
+struct Node * insertAtIndex(struct Node * head, int data, int index){
+    if(index == 0){
+        head = insertAtHead(head, data);
+    }else{
+        struct Node * ptr = (struct Node *)malloc(sizeof(struct Node));
+        struct Node * temp = head;
+        ptr->data = data;
+        int i = 0;
+        while(i != index-1){
+            temp = temp->next;
+        }
+        ptr->next = temp->next;
+        temp->next = ptr;
+    }
+    return head;
+}
+
 struct Node * deleteHead(struct Node * head){
     struct Node * ptr = head;
     head = head->next;
@@ -70,14 +87,14 @@ void traverseList(struct Node * head){
 int main(){
     struct Node * head = (struct Node *)malloc(sizeof(struct Node));
     head->next = NULL;
-    int choice;
-    int data;
+    int choice, data, index;
     printf("1. Create Linked List\n");
     printf("2. Enter data at beginning\n");
     printf("3. View Linked List\n");
     printf("4. Insert at the end\n");
     printf("5. Delete Head\n");
     printf("6. Delete the end\n");
+    printf("7. Insert At Index\n");
 
     while(1){
         printf("Enter your choice: ");
@@ -112,6 +129,14 @@ int main(){
 
         case 6:
             head = deleteEnd(head);
+            break;
+
+        case 7:
+            printf("\tEnter the data to insert: ");
+            scanf("%d", &data);
+            printf("\n\tEnter the index to append at: ");
+            scanf("%d", &index);
+            head = insertAtIndex(head, data, index);
             break;
 
         default:
