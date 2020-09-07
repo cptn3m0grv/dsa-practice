@@ -5,6 +5,7 @@ struct Node {
     int data;
     struct Node * next;
 };
+
 struct Node * deleteData(struct Node * head, int data){
     struct Node * p = head;
     struct Node * q = head->next;
@@ -18,27 +19,39 @@ struct Node * deleteData(struct Node * head, int data){
     }
     return head;
 }
+
 void traverseList(struct Node * head){
     while(head != NULL){
         printf("%d\t", head->data);
         head = head->next;
     }
 }
+
+int cont(int arr[], int data){
+    int i=0;
+    for(i=0; i<(sizeof(arr)/sizeof(arr[0])); i++){
+       if(arr[i] == data){
+           return 0;
+       }
+    }
+    return 1;
+}
+
 struct Node * removeDups(struct Node * head){
     int buffer[] = {0, 0, 0, 0, 0, 0};
     int i = 0;
     struct Node * ptr = head;
     while(ptr != NULL){
-        buffer[i]++;
+        if(cont(buffer, ptr->data) == 0){
+            head = deleteData(head, ptr->data);
+        }
+        buffer[ptr->data] = ptr->data;
         ptr = ptr->next;
     }
-    for(i=0; i<(sizeof(buffer)/sizeof(buffer[0])); i++){
-        if(buffer[i] > 1){
-            head = deleteData(head, i);
-        }
-    }
+    
     return head;
 }
+
 int main(){
     struct Node * head = (struct Node *)malloc(sizeof(struct Node));
     struct Node * second = (struct Node *)malloc(sizeof(struct Node));
