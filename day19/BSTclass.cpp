@@ -72,6 +72,34 @@ class BST{
             cout << root->value << "\n";
             print2D(root->left, space);
         }
+
+        void printPreOrder(TreeNode *root){
+            if(root == NULL){
+                return;
+            }
+
+            cout << root->value << "\t" ;
+            printPreOrder(root->left);
+            printPreOrder(root->right);
+        }
+
+        void printPostOrder(TreeNode *root){
+            if(root == NULL){
+                return;
+            }
+            printPostOrder(root->left);
+            printPostOrder(root->right);
+            cout << root->value << "\t";
+        }
+
+        void printInOrder(TreeNode *root){
+            if(root == NULL){
+                return;
+            }
+            printInOrder(root->left);
+            cout << root->value << "\t";
+            printInOrder(root->right);
+        }
 };
 
 int main(){
@@ -85,6 +113,9 @@ int main(){
         cout << "3. Delete Node" << endl;
         cout << "4. Print BST Values" << endl;
         cout << "5. Clear Screen" << endl;
+        cout << "6. Pre-order traversal" << endl;
+        cout << "7. Post-order traversal" << endl;
+        cout << "8. In-order traversal" << endl;
         cout << "0. Exit Program" << endl;
 
         cin >> option;
@@ -112,6 +143,18 @@ int main(){
                 break; 
             case 5:
                 cout << "Clear Screen" << endl;
+                break;
+            case 6:
+                cout << "Pre-order traversal" << endl;
+                tree1.printPreOrder(tree1.root);
+                break;
+            case 7:
+                cout << "Post-order taversal" << endl;
+                tree1.printPostOrder(tree1.root);
+                break;
+            case 8:
+                cout << "In-order traversal" << endl;
+                tree1.printInOrder(tree1.root);
                 break;
             default:
                 cout << "Invalid !!";
