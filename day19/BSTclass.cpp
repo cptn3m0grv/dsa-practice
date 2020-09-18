@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+#define SPACE 10
 
 class TreeNode{
     public:
@@ -24,14 +25,59 @@ class BST{
     public:
         TreeNode *root;
 
+        BST(){
+            root = NULL;
+        }
+
         bool isEmpty(){
             return (root == NULL) ? true : false;
+        }
+
+        void insertNode(TreeNode *newNode){
+            if(root == NULL){
+                root = newNode;
+                cout << "Value inserted as root node!" << endl;
+            }else{
+                TreeNode *temp = root;
+                while(temp != NULL){
+                    if(newNode->value == temp->value){
+                        cout<< "Value already exists." << endl;
+                    }else if((newNode->value < temp->value) && (temp->left == NULL)){
+                        temp->left = newNode;
+                        cout << "Value inserted to the left !!!" << endl;
+                        break;   
+                    }else if(newNode->value < temp->value){
+                        temp = temp->left;
+                    }else if((newNode->value > temp->value) && (temp->right == NULL)){
+                        temp->right = newNode;
+                        cout << "Value inserted to the right !!!" << endl;
+                        break;
+                    }else{
+                        temp = temp->right;
+                    }
+                }
+            }
+        }
+
+        void print2D(TreeNode *root, int space){
+            if(root == NULL){
+                return;
+            }
+            space += SPACE;
+            print2D(root->right, space);
+            cout << endl;
+            for(int i = SPACE; i < space; i++){
+                cout << " ";
+            }
+            cout << root->value << "\n";
+            print2D(root->left, space);
         }
 };
 
 int main(){
 
-    int option;
+    BST tree1;
+    int option, val;
 
     do{
         cout << "1. Insert Node" << endl;
@@ -42,12 +88,17 @@ int main(){
         cout << "0. Exit Program" << endl;
 
         cin >> option;
+        TreeNode *newNode = new TreeNode(); // global scope and in heap mem
 
         switch(option){
             case 0:
                 break;
             case 1:
                 cout << "Insert" << endl;
+                cout << "Enter the value of tree node: ";
+                cin >> val;
+                newNode->value = val;
+                tree1.insertNode(newNode);
                 break;
             case 2:
                 cout << "Search" << endl;
@@ -57,6 +108,7 @@ int main(){
                 break;
             case 4:
                 cout << "Print BST Values" << endl;
+                tree1.print2D(tree1.root, 5);
                 break; 
             case 5:
                 cout << "Clear Screen" << endl;
