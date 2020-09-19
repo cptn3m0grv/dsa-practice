@@ -1,4 +1,4 @@
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 // Input:
@@ -11,36 +11,40 @@ using namespace std;
 // 2 4
 // 1 5
 
-void subArray(int arr[], int size, int sum){
-    int curr_sum, i, j;
-    for(i = 0; i < size; i++){
+int subArray(int arr[], int size, int sum){
+    int curr_sum;
+    for(int i = 0; i < size; i++){
         curr_sum = arr[i];
-        for(j = i+1; j < size; j++){
+        for(int j = i+1; j < size; j++){
             if(curr_sum == sum){
-                cout << i+1 << " " << j << endl;
-                return;
-            }  
+                printf("%d %d", i+1, j);
+                return 0;
+            }
             if(curr_sum > sum || j == 0){
                 break;
             }
             curr_sum = curr_sum + arr[j];
         }
     }
-    cout << "-1";
+
+    return -1;
 }
 
 int main(){
+
     int test, size, sum;
-    cin >> test;
+    scanf("%d", &test);
 
     while(test--){
-        cin >> size;
-        cin >> sum;
+        scanf("%d", &size);
+        scanf("%d", &sum);
         int arr[size];
         for(int i = 0; i < size; i++){
-            cin >> arr[i];
+            scanf("%d", &arr[i]);
         }
-        subArray(arr, size, sum);
+        if(subArray(arr, size, sum) == -1){
+            printf("-1");
+        }
     }
 
     return 0;
