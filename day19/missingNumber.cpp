@@ -3,14 +3,12 @@ using namespace std;
 
 
 int findMissing(int arr[], int size){
-    int i;
+    int total = (size+1)*(size+2) / 2;
     for(int i = 0; i < size; i++){
-        if(arr[i] != i+1){
-            return i+1;
-        }
+        total -= arr[i];
     }
 
-    return 0;
+    return total;
 }
 
 int main(){
@@ -19,9 +17,10 @@ int main(){
     scanf("%d", &test);
     while(test--){
         scanf("%d", &size);
+        size = size - 1;
         int arr[size];
         int i;
-        for(i = 0; i < size - 1; i++){
+        for(i = 0; i < size; i++){
             scanf("%d", &arr[i]);
         }
         sort(arr, arr+size);
