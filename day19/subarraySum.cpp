@@ -12,22 +12,15 @@ using namespace std;
 // 1 5
 
 int subArray(int arr[], int size, int sum){
-    int curr_sum;
+    int maxEndingHere = arr[0];
+    int maxSoFar = arr[0];
+
     for(int i = 0; i < size; i++){
-        curr_sum = arr[i];
-        for(int j = i+1; j < size; j++){
-            if(curr_sum == sum){
-                printf("%d %d", i+1, j);
-                return 0;
-            }
-            if(curr_sum > sum || j == 0){
-                break;
-            }
-            curr_sum = curr_sum + arr[j];
-        }
+        maxEndingHere = max(maxEndingHere + arr[i], arr[i]);
+        maxSoFar = max(maxSoFar, maxEndingHere);
     }
 
-    return -1;
+    return maxSoFar;
 }
 
 int main(){
@@ -42,9 +35,7 @@ int main(){
         for(int i = 0; i < size; i++){
             scanf("%d", &arr[i]);
         }
-        if(subArray(arr, size, sum) == -1){
-            printf("-1");
-        }
+        int maxSubArray = subArray(arr, size, sum);
     }
 
     return 0;
