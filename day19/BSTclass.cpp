@@ -100,6 +100,24 @@ class BST{
             cout << root->value << "\t";
             printInOrder(root->right);
         }
+
+        TreeNode* iterativeSearch(int val){
+            if(root == NULL){
+                return root;
+            }else{
+                TreeNode *temp = root;
+                while(temp != NULL){
+                    if(val == temp->value){
+                        return temp;
+                    }else if(val > temp->value){
+                        temp = temp->right;
+                    }else if(val < temp->value){
+                        temp = temp->left;
+                    }
+                }
+                return NULL;
+            }
+        }
 };
 
 int main(){
@@ -132,7 +150,16 @@ int main(){
                 tree1.insertNode(newNode);
                 break;
             case 2:
+                int val;
                 cout << "Search" << endl;
+                cout << "Enter the value to search: ";
+                cin >> val;
+                newNode = tree1.iterativeSearch(val);
+                if(newNode == NULL){
+                    cout << "Node not found !" << endl;
+                }else{
+                    cout << "Node Found !" << endl;
+                }
                 break;
             case 3:
                 cout << "Delete" << endl;
