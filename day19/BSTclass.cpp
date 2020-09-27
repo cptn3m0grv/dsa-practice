@@ -118,6 +118,16 @@ class BST{
                 return NULL;
             }
         }
+
+        TreeNode* recursiveSearch(TreeNode *r, int val){
+            if(r == NULL || r->value == val){
+                return r;
+            }else if(val < r->value){
+                return recursiveSearch(r->left, val);
+            }else{
+                return recursiveSearch(r->right, val);
+            }
+        }
 };
 
 int main(){
@@ -134,6 +144,7 @@ int main(){
         cout << "6. Pre-order traversal" << endl;
         cout << "7. Post-order traversal" << endl;
         cout << "8. In-order traversal" << endl;
+        cout << "9. Recurive Search" << endl;
         cout << "0. Exit Program" << endl;
 
         cin >> option;
@@ -182,6 +193,18 @@ int main(){
             case 8:
                 cout << "In-order traversal" << endl;
                 tree1.printInOrder(tree1.root);
+                break;
+            case 9:
+                int val;
+                cout << "Search" << endl;
+                cout << "Enter the value to search: ";
+                cin >> val;
+                newNode = tree1.recursiveSearch(tree1.root, val);
+                if(newNode == NULL){
+                    cout << "Node not found !" << endl;
+                }else{
+                    cout << "Node Found !" << endl;
+                }
                 break;
             default:
                 cout << "Invalid !!";
