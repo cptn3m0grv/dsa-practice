@@ -128,6 +128,21 @@ class BST{
                 return recursiveSearch(r->right, val);
             }
         }
+
+        int height(TreeNode *r){
+            if(r == NULL){
+                return -1;
+            }else{
+                int lheight = height(r->left);
+                int rheight = height(r->right);
+
+                if(lheight > rheight){
+                    return lheight+1;
+                }else{
+                    return rheight+1;
+                }
+            }
+        }
 };
 
 int main(){
@@ -145,6 +160,7 @@ int main(){
         cout << "7. Post-order traversal" << endl;
         cout << "8. In-order traversal" << endl;
         cout << "9. Recurive Search" << endl;
+        cout << "10. Height of a BST" << endl;
         cout << "0. Exit Program" << endl;
 
         cin >> option;
@@ -205,6 +221,10 @@ int main(){
                 }else{
                     cout << "Node Found !" << endl;
                 }
+                break;
+            case 10:
+                int he = tree1.height(tree1.root);
+                cout << he << endl;
                 break;
             default:
                 cout << "Invalid !!";
