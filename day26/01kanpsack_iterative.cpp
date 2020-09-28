@@ -1,46 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int knapsack(int values[], int weights[], int size, int capacity){
-    int t[size+1][capacity+1];
-    for(int i = 0; i < size+1; i++){
-        for(int j = 0; j < capacity+1; i++){
-            if(i==0 || j==0){
-                t[i][j] = 0;
-            }
-        }
-    }
+int knapSack(int values[], int weights[], int size, int capacity){
+    int dp[size+1][capacity+1];
 
-    for(int i = 1; i < size +1; i++){
-        for(int j = 1; j < capacity + 1; j++){
-            if(weights[i-1] <= j){
-                t[i][j] = max(values[i-1] + t[i-1][j-weights[i-1]], t[i-1][j]);
+    for(int i = 0; i <= size; i++){
+        for(int j = 0; j <= capacity; j++){
+            if(i == 0 || j == 0){
+                dp[i][j] = 0;
+            }else if(weights[i-1] <= j){
+                dp[i][j] = max(values[i-1] + dp[i-1][j-weights[i-1]], dp[i-1][j]);
             }else{
-                t[i][j] = t[i-1][j];
+                dp[i][j] = dp[i-1][j];
             }
         }
     }
-
-    return t[size][capacity];
-
+    return dp[size][capacity];
 }
 
-int main(void){
-    int test, size, capacity;
+int main(){
+    int test;
     scanf("%d", &test);
     while(test--){
+        int size, capacity;
         scanf("%d%d", &size, &capacity);
-        int values[size], weights[size];
-        
+        int values[size];
+        int weights[size];
         for(int i = 0; i < size; i++){
             scanf("%d", &values[i]);
         }
         for(int i = 0; i < size; i++){
             scanf("%d", &weights[i]);
         }
-
-        int max_profit = knapsack(values, weights, size, capacity);
-        printf("%d\n", max_profit);
+        printf("%d\n", knapSack(values, weights, size, capacity));
     }
     return 0;
 }
