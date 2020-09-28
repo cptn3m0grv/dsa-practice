@@ -1,42 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
-int t[1002][1002];
 
-int knapsack(int weight[], int values[], int capacity, int size){
-    if(size == 0 || capacity == 0){
+int knapSackRec(int values[], int weights[], int size, int capacity, int **dp){
+    if(size < 0){
         return 0;
     }
 
-    if(t[size][capacity] != -1){
-        return t[size][capacity];
+    if(dp[size][capacity] != -1){
+        return dp[size][capacity];
     }
 
-    if(weight[size - 1] <= capacity){
-        return t[size][capacity] = max(values[size - 1] + knapsack(weight, values, capacity - weight[size-1], size - 1), knapsack(weight, values, capacity, size -1 ));
-    }else if(weight[size - 1] > capacity){
-        return t[size][capacity] = knapsack(weight, values, capacity, size - 1);
+    if(weights[size] > capacity){
+        dp[size][capacity] = knapSackRec(values, weights,size-1, capacity, dp);
+        return dp[size][capacity];
+    }else{
+        dp[size][capacity] = max(values[size] + knapSackRec(values, weights, size-1, capacity-weights[size], dp), knapSackRec(values, weights, size-1, capacity, dp));
+        return dp[size][capacity];
     }
 }
 
+int knapsack(int values[], int weights[], int size, int capacity){
+    int **dp;
+    dp = new int*[size];
+    for(int i = 0; i < size; i++){
+        dp[i] = new int[capacity + 1];
+    }
+    for(int i = 0; i < size; i++){
+        for(int j  = 0; j < capacity+1; j++){
+            dp[i][j] = -1;
+        }
+    }
+
+    return knapSackRec(values, weights, size - 1, capacity, dp);
+}
+
 int main(void){
-    memset(t, -1, sizeof(t));
     int test;
     scanf("%d", &test);
     while(test--){
-        int size;
-        scanf("%d", &size);
-        int capacity;
-        scanf("%d", &capacity);
+        int size, capacity;
+        scanf("%d%d", &size, &capacity);
         int values[size];
-        int weight[size];
+        int weights[size];
         for(int i = 0; i < size; i++){
             scanf("%d", &values[i]);
         }
         for(int i = 0; i < size; i++){
-            scanf("%d", &weight[i]);
+            scanf("%d", &weights[i]);
         }
-        int max = knapsack(weight, values, capacity, size);
-        printf("%d\n", max);
+
+        printf("%d\n", knapsack(values, weights, size, capacity));
     }
-    return 0;
 }
