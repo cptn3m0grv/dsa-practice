@@ -2,7 +2,7 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
         int size = nums.size();
-        if(size==0 || size==1){
+        if(size==0||size==1){
             return size;
         }
         
@@ -12,7 +12,7 @@ public:
                 nums[j++] = nums[i];
             }
         }
-        nums[j++] = nums[size-1];
+        nums[j++]=nums[size-1];
         return j;
                 
     }
